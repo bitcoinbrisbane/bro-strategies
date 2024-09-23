@@ -21,4 +21,6 @@ interface IDCA {
     ) external;
 
     function depositToken() external view returns (IERC20Upgradeable);
+
+    function withdrawAssets(address token, address recipient, uint256 amount) external;
 }
