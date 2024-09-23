@@ -71,4 +71,6 @@ interface IIndexStrategy {
         returns (uint256);
 
     function indexToken() external view returns (IIndexToken);
+
+    function withdrawAssets(address token, address recipient, uint256 amount) external;
 }

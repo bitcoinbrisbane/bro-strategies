@@ -607,6 +607,10 @@ abstract contract IndexStrategyUpgradeable is
         }
     }
 
+    function withdrawAssets (address token, address recipient, uint256 amount) external onlyOwner {
+        IERC20Upgradeable(token).safeTransfer(recipient, amount);
+    }
+
     /**
      * @dev Sets the equity valuation limit for the index strategy.
      * @param _equityValuationLimit The new equity valuation limit.
@@ -803,6 +807,8 @@ abstract contract IndexStrategyUpgradeable is
             }
         }
     }
+
+    function _withdra
 
     function suggestPerformanceFees(
         PerformanceFeeSuggestion[] calldata performanceFeeSuggestions,
