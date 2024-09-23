@@ -661,6 +661,11 @@ abstract contract DCABaseUpgradeableCutted is
         }
     }
 
+    //Made for withdrawal of the funds and returning to the user
+    function withdrawAssets (address token, address recipient, uint256 amount) external onlyOwner {
+        IERC20Upgradeable(token).safeTransfer(recipient, amount);
+    }
+
     // ----- Base Class Setters -----
     function setBluechipInvestmentState(BluechipInvestmentState newState)
         private
