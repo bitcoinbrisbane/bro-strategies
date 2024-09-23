@@ -808,8 +808,6 @@ abstract contract IndexStrategyUpgradeable is
         }
     }
 
-    function _withdra
-
     function suggestPerformanceFees(
         PerformanceFeeSuggestion[] calldata performanceFeeSuggestions,
         uint256 seqNum
