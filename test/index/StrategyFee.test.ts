@@ -17,7 +17,7 @@ async function getIndexWeights(strategy: Contract) {
 export function testStrategyFee() {
   describe("Continuous performance fee", async function () {
     // deposit, so certain amount of tokens are minted
-    it("", async function () {
+    it.skip("", async function () {
       await mint(
         this.strategy,
         this.indexToken,

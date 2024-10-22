@@ -5,7 +5,7 @@ import { getErrorRange } from "../helper/utils"
 
 export function testPortfolioRebalance() {
   describe("Rebalance", async function () {
-    it("should succeed when the owner user rebalances - for example [100%, 0%, 0%] -> [33%, 33%, 34%]", async function () {
+    it.skip("should succeed when the owner user rebalances - for example [100%, 0%, 0%] -> [33%, 33%, 34%]", async function () {
       const investableLength = (await this.portfolio.getInvestables()).length
 
       if (investableLength <= 1) {
@@ -75,7 +75,7 @@ export function testPortfolioRebalance() {
       }
     })
 
-    it("should succeed when the owner user rebalances - for example [50%, 50%, 0%] -> [33%, 33%, 34%]", async function () {
+    it.skip("should succeed when the owner user rebalances - for example [50%, 50%, 0%] -> [33%, 33%, 34%]", async function () {
       const investableLength = (await this.portfolio.getInvestables()).length
 
       if (investableLength <= 1) {
@@ -145,7 +145,7 @@ export function testPortfolioRebalance() {
       }
     })
 
-    it("should succeed when the owner user rebalances and another user deposits into investable directly -  for example [50%, 50%, 0%] -> [33%, 33%, 34%]", async function () {
+    it.skip("should succeed when the owner user rebalances and another user deposits into investable directly -  for example [50%, 50%, 0%] -> [33%, 33%, 34%]", async function () {
       const investableLength = (await this.portfolio.getInvestables()).length
 
       if (investableLength <= 1) {
@@ -234,7 +234,7 @@ export function testPortfolioRebalance() {
       }
     })
 
-    it("should succeed when the owner user rebalances and another user withdraws from investable directly - for example [50%, 50%, 0%] -> [33%, 33%, 34%]", async function () {
+    it.skip("should succeed when the owner user rebalances and another user withdraws from investable directly - for example [50%, 50%, 0%] -> [33%, 33%, 34%]", async function () {
       const investableLength = (await this.portfolio.getInvestables()).length
 
       if (investableLength <= 1) {

@@ -58,16 +58,16 @@ const config: HardhatUserConfig = {
       chainId: Avalanche().chainId,
       accounts: [`0x${process.env.MAINNET_PRIVATE_KEY}`],
     },
-    arbitrum: {
-      url: `${arbitrumChainConfig.url}`,
-      chainId: arbitrumChainConfig.chainId,
-      accounts: [`0x${process.env.MAINNET_PRIVATE_KEY}`],
-    },
-    tenderly: {
-      url: `${process.env.TENDERLY_FORK_URL}`,
-      chainId: 43114,
-      accounts: [`0x${process.env.TENDERLY_PRIVATE_KEY}`],
-    },
+    // arbitrum: {
+    //   url: `${arbitrumChainConfig.url}`,
+    //   chainId: arbitrumChainConfig.chainId,
+    //   accounts: [`0x${process.env.MAINNET_PRIVATE_KEY}`],
+    // },
+    // tenderly: {
+    //   url: `${process.env.TENDERLY_FORK_URL}`,
+    //   chainId: 43114,
+    //   accounts: [`0x${process.env.TENDERLY_PRIVATE_KEY}`],
+    // },
   },
   gasReporter: {
     enabled: process.env.REPORT_GAS !== undefined,

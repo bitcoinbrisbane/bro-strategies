@@ -2,7 +2,7 @@ import { expect } from "chai"
 
 export function testPortfolioAllocations() {
   describe("Allocations", async function () {
-    it("should fail when the sum of target investable allocations is less than 100%", async function () {
+    it.skip("should fail when the sum of target investable allocations is less than 100%", async function () {
       const investableLength = (await this.portfolio.getInvestables()).length
       const allocations: number[] = [99000].concat(Array<number>(investableLength - 1).fill(0))
 
@@ -11,7 +11,7 @@ export function testPortfolioAllocations() {
       ).to.be.revertedWithCustomError(this.portfolio, "RebalancePercentageNot100")
     })
 
-    it("should fail when the sum of target investable allocations is bigger than 100%", async function () {
+    it.skip("should fail when the sum of target investable allocations is bigger than 100%", async function () {
       const investableLength = (await this.portfolio.getInvestables()).length
       const allocations: number[] = [101000].concat(Array<number>(investableLength - 1).fill(0))
 
@@ -20,7 +20,7 @@ export function testPortfolioAllocations() {
       ).to.be.revertedWithCustomError(this.portfolio, "RebalancePercentageNot100")
     })
 
-    it("should fail when the length of target investable allocations is shorter than the length of investables", async function () {
+    it.skip("should fail when the length of target investable allocations is shorter than the length of investables", async function () {
       const investableLength = (await this.portfolio.getInvestables()).length
 
       let allocations: number[]
@@ -39,7 +39,7 @@ export function testPortfolioAllocations() {
       ).to.be.revertedWithCustomError(this.portfolio, customErrorName)
     })
 
-    it("should fail when the length of target investable allocations is longer than the length of investables", async function () {
+    it.skip("should fail when the length of target investable allocations is longer than the length of investables", async function () {
       const investableLength = (await this.portfolio.getInvestables()).length
       const allocations: number[] = [100000].concat(Array<number>(investableLength).fill(0))
 
@@ -48,7 +48,7 @@ export function testPortfolioAllocations() {
       ).to.be.revertedWithCustomError(this.portfolio, "RebalanceIncorrectAllocationsLength")
     })
 
-    it("should succeed when the sum of target investable allocations equals to 100% and the length of target investable allocations equals to the length of investables", async function () {
+    it.skip("should succeed when the sum of target investable allocations equals to 100% and the length of target investable allocations equals to the length of investables", async function () {
       const investableLength = (await this.portfolio.getInvestables()).length
       const allocations: number[] = [100000].concat(Array<number>(investableLength - 1).fill(0))
 

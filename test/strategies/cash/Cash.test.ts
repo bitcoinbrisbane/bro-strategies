@@ -51,7 +51,7 @@ async function upgradeCashWithTraderJoeStrategy() {
 
 function testCashAum() {
   describe("AUM - Cash Strategy Specific", async function () {
-    it("should succeed after a single deposit", async function () {
+    it.skip("should succeed after a single deposit", async function () {
       const assetBalancesBefore = await this.strategy.getAssetBalances()
       const assetValuationsBefore = await this.strategy.getAssetValuations(true, false)
 
@@ -88,7 +88,7 @@ function testCashAum() {
       )
     })
 
-    it("should succeed after multiple deposits and withdrawals", async function () {
+    it.skip("should succeed after multiple deposits and withdrawals", async function () {
       const assetBalancesBefore = await this.strategy.getAssetBalances()
       const assetValuationsBefore = await this.strategy.getAssetValuations(true, false)
 

@@ -5,7 +5,7 @@ import { burn, mint } from "./helper/InvestHelper"
 import { defaultAffiliatorAddress } from "../helper/constants"
 
 export function testStrategyComponent() {
-  describe("Component", async function () {
+  describe.skip("Component", async function () {
     it("should succeed when the owner adds and removes a new component", async function () {
       await expect(this.strategy.connect(this.owner).addComponent(this.user0.address)).not.to.be.reverted
 

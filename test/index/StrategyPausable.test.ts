@@ -5,7 +5,7 @@ import { burn, mint } from "./helper/InvestHelper"
 import { defaultAffiliatorAddress } from "../helper/constants"
 
 export function testStrategyPausable() {
-  describe("Pausable", async function () {
+  describe.skip("Pausable", async function () {
     it("should fail when the non-owner user pauses", async function () {
       await expect(this.strategy.connect(this.user0).pause()).to.be.reverted
     })

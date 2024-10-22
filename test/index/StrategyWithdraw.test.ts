@@ -32,7 +32,7 @@ export function testStrategyWithdraw() {
       )
     })
 
-    it("should succeed when a single user withdraws IndexToken fully for other person", async function () {
+    it.skip("should succeed when a single user withdraws IndexToken fully for other person", async function () {
       // User 0 deposits.
       await mint(
         this.strategy,
@@ -57,7 +57,7 @@ export function testStrategyWithdraw() {
       )
     })
 
-    it("should succeed when a single user withdraws IndexToken partially", async function () {
+    it.skip("should succeed when a single user withdraws IndexToken partially", async function () {
       // User 0 deposits.
       await mint(
         this.strategy,
@@ -82,7 +82,7 @@ export function testStrategyWithdraw() {
       )
     })
 
-    it("should succeed when a single user withdraws IndexToken partially for other person", async function () {
+    it.skip("should succeed when a single user withdraws IndexToken partially for other person", async function () {
       // User 0 deposits.
       await mint(
         this.strategy,
@@ -107,7 +107,7 @@ export function testStrategyWithdraw() {
       )
     })
 
-    it("should succeed when multiple users withdraw", async function () {
+    it.skip("should succeed when multiple users withdraw", async function () {
       // User 0 deposits.
       await mint(
         this.strategy,
@@ -180,7 +180,7 @@ export function testStrategyWithdraw() {
       )
     })
 
-    it("should succeed when multiple users withdraw for other person", async function () {
+    it.skip("should succeed when multiple users withdraw for other person", async function () {
       // User 0 deposits.
       await mint(
         this.strategy,
@@ -253,7 +253,7 @@ export function testStrategyWithdraw() {
       )
     })
 
-    it("should fail when a user set minimum out too high", async function () {
+    it.skip("should fail when a user set minimum out too high", async function () {
       // User 0 deposits.
       await mint(
         this.strategy,

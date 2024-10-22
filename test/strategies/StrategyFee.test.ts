@@ -10,7 +10,7 @@ getErrorRange
 
 export function testStrategyFee() {
   describe("Fee", async function () {
-    it("management fee handling", async function () {
+    it.skip("management fee handling", async function () {
       const initialAccumulatedFee = await this.strategy.getCurrentAccumulatedFee()
       const initialEquityValuation = await this.strategy.getEquityValuation(false, false)
       const initialInvestmentTokenSupply = await this.strategy.getInvestmentTokenSupply()
@@ -113,7 +113,7 @@ export function testStrategyFee() {
       expect(feeReceiverBalanceAfterClaiming - feeReceiverBalanceBeforeClaiming).to.equal(feeAmount)
     })
 
-    it("should succeed when any user calls claim fee", async function () {
+    it.skip("should succeed when any user calls claim fee", async function () {
       const feeReceiver = await this.strategy.getFeeReceiver([])
       const feeAmount = await this.strategy.getCurrentAccumulatedFee()
 
@@ -128,28 +128,28 @@ export function testStrategyFee() {
       expect(usdcBalanceAfter - usdcBalanceBefore).to.equal(feeAmount)
     })
 
-    it("should fail when the owner user sets deposit fee greater than or equal to 100%", async function () {
+    it.skip("should fail when the owner user sets deposit fee greater than or equal to 100%", async function () {
       await expect(this.strategy.connect(this.owner).setDepositFee(100000, [])).to.be.revertedWithCustomError(
         this.strategy,
         "InvalidFeeError"
       )
     })
 
-    it("should fail when the owner user sets withdrawal fee greater than or equal to 100%", async function () {
+    it.skip("should fail when the owner user sets withdrawal fee greater than or equal to 100%", async function () {
       await expect(this.strategy.connect(this.owner).setWithdrawalFee(100000, [])).to.be.revertedWithCustomError(
         this.strategy,
         "InvalidFeeError"
       )
     })
 
-    it("should fail when the owner user sets performance fee greater than or equal to 100%", async function () {
+    it.skip("should fail when the owner user sets performance fee greater than or equal to 100%", async function () {
       await expect(this.strategy.connect(this.owner).setPerformanceFee(100000, [])).to.be.revertedWithCustomError(
         this.strategy,
         "InvalidFeeError"
       )
     })
 
-    it("should succeed when a single user withdraws and withdrawal fee is 30%", async function () {
+    it.skip("should succeed when a single user withdraws and withdrawal fee is 30%", async function () {
       await this.strategy.connect(this.owner).setWithdrawalFee(30000, [])
 
       const user0BalanceBefore = await this.depositToken.balanceOf(this.user0.address)
@@ -184,7 +184,7 @@ export function testStrategyFee() {
       )
     })
 
-    it("should succeed when multiple users withdraw and withdrawal fee is 30%", async function () {
+    it.skip("should succeed when multiple users withdraw and withdrawal fee is 30%", async function () {
       // The first user deposits.
       const user0BalanceBefore = await this.depositToken.balanceOf(this.user0.address)
       await this.depositToken

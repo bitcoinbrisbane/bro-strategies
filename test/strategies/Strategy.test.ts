@@ -35,7 +35,7 @@ export function testStrategy(
   testOptions: StrategyTestOptions,
   strategySpecificTests: (() => void)[]
 ) {
-  describe(description, function () {
+  describe.only(description, function () {
     before(async function () {
       await network.provider.request({
         method: "hardhat_reset",

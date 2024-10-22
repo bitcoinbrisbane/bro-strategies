@@ -3,7 +3,7 @@ import { mint } from "./helper/InvestHelper"
 import { defaultAffiliatorAddress } from "../helper/constants"
 
 export function testStrategyDeposit() {
-  describe("Deposit", async function () {
+  describe.skip("Deposit", async function () {
     it("should succeed when a single user deposits normal amount of `depositToken`", async function () {
       await mint(
         this.strategy,

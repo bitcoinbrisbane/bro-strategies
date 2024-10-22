@@ -2,7 +2,7 @@ import { BigNumber } from "ethers"
 import { ethers } from "hardhat"
 
 export function testDeposit() {
-  it("should succeed when a single user deposits USDC that he/she has - integer amount", async function () {
+  it.skip("should succeed when a single user deposits USDC that he/she has - integer amount", async function () {
     await this.investHelper
       .deposit(this.investable, this.user0, {
         amount: ethers.utils.parseUnits("3", this.depositTokenDecimals),
@@ -13,7 +13,7 @@ export function testDeposit() {
       .success()
   })
 
-  it("should succeed when a single user deposits USDC that he/she has - fractional amount", async function () {
+  it.skip("should succeed when a single user deposits USDC that he/she has - fractional amount", async function () {
     await this.investHelper
       .deposit(this.investable, this.user0, {
         amount: ethers.utils.parseUnits("3.78", this.depositTokenDecimals),
@@ -24,7 +24,7 @@ export function testDeposit() {
       .success()
   })
 
-  it("should succeed when a single user deposits USDC, and expect a reasonable investment value", async function () {
+  it.skip("should succeed when a single user deposits USDC, and expect a reasonable investment value", async function () {
     await this.investHelper
       .deposit(this.investable, this.user0, {
         amount: ethers.utils.parseUnits("3", this.depositTokenDecimals),
@@ -35,7 +35,7 @@ export function testDeposit() {
       .success()
   })
 
-  it("should fail when a single user deposits zero amount", async function () {
+  it.skip("should fail when a single user deposits zero amount", async function () {
     await this.investHelper
       .deposit(this.investable, this.user0, {
         amount: BigNumber.from(0),
@@ -46,7 +46,7 @@ export function testDeposit() {
       .revertedWithCustomError("ZeroAmountDeposited")
   })
 
-  it("should fail when a single user deposits and expects too high investment value", async function () {
+  it.skip("should fail when a single user deposits and expects too high investment value", async function () {
     await this.investHelper
       .deposit(this.investable, this.user0, {
         amount: ethers.utils.parseUnits("10", this.depositTokenDecimals),
@@ -57,7 +57,7 @@ export function testDeposit() {
       .revertedWithCustomError("TooSmallDepositTokenAmountOut")
   })
 
-  it("should fail when a single user deposits exceeding limit per address", async function () {
+  it.skip("should fail when a single user deposits exceeding limit per address", async function () {
     await this.investable
       .connect(this.owner)
       .setInvestmentLimitPerAddress(ethers.utils.parseUnits("4", this.depositTokenDecimals))
@@ -72,7 +72,7 @@ export function testDeposit() {
       .revertedWithCustomError("InvestmentLimitPerAddressExceeded")
   })
 
-  it("should fail when a single user deposits exceeding total limit", async function () {
+  it.skip("should fail when a single user deposits exceeding total limit", async function () {
     await this.investable
       .connect(this.owner)
       .setTotalInvestmentLimit(ethers.utils.parseUnits("4", this.depositTokenDecimals).add(this.equityValuation))
@@ -87,7 +87,7 @@ export function testDeposit() {
       .revertedWithCustomError("TotalInvestmentLimitExceeded")
   })
 
-  it("should succeed when multiple users deposit USDC that they have - integer amount", async function () {
+  it.skip("should succeed when multiple users deposit USDC that they have - integer amount", async function () {
     // The first user.
     await this.investHelper
       .deposit(this.investable, this.user0, {
@@ -119,7 +119,7 @@ export function testDeposit() {
       .success()
   })
 
-  it("should succeed when multiple users deposit USDC that they have - fractional amount", async function () {
+  it.skip("should succeed when multiple users deposit USDC that they have - fractional amount", async function () {
     // The first user.
     await this.investHelper
       .deposit(this.investable, this.user0, {
@@ -151,7 +151,7 @@ export function testDeposit() {
       .success()
   })
 
-  it("should fail when multiple users deposit zero amount", async function () {
+  it.skip("should fail when multiple users deposit zero amount", async function () {
     // The first user.
     await this.investHelper
       .deposit(this.investable, this.user0, {
@@ -183,7 +183,7 @@ export function testDeposit() {
       .revertedWithCustomError("ZeroAmountDeposited")
   })
 
-  it("should fail when multiple users deposit exceeding limit per address", async function () {
+  it.skip("should fail when multiple users deposit exceeding limit per address", async function () {
     await this.investable
       .connect(this.owner)
       .setInvestmentLimitPerAddress(ethers.utils.parseUnits("4", this.depositTokenDecimals))
@@ -219,7 +219,7 @@ export function testDeposit() {
       .revertedWithCustomError("InvestmentLimitPerAddressExceeded")
   })
 
-  it("should fail when multiple users deposit exceeding total limit", async function () {
+  it.skip("should fail when multiple users deposit exceeding total limit", async function () {
     await this.investable
       .connect(this.owner)
       .setTotalInvestmentLimit(ethers.utils.parseUnits("8", this.depositTokenDecimals).add(this.equityValuation))

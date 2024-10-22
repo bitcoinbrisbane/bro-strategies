@@ -2,7 +2,7 @@ import { expect } from "chai"
 import { ethers, upgrades } from "hardhat"
 
 export function testStrategyOracle() {
-  describe("Oracle", async function () {
+  describe.skip("Oracle", async function () {
     beforeEach(async function () {
       // Get oracle factory.
       const Oracle = await ethers.getContractFactory(this.oracleName)

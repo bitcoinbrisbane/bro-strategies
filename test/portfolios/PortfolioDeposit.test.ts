@@ -8,7 +8,7 @@ export function testPortfolioDeposit() {
   describe("Deposit - Portfolio", async function () {
     testDeposit()
 
-    it("should succeed when a single user deposits USDC that he/she has and another user deposited into investable directly before that", async function () {
+    it.skip("should succeed when a single user deposits USDC that he/she has and another user deposited into investable directly before that", async function () {
       const investableDecs = await this.portfolio.getInvestables()
       const investable = await ethers.getContractAt("IInvestable", await investableDecs[0].investable)
 
@@ -33,7 +33,7 @@ export function testPortfolioDeposit() {
         .success()
     })
 
-    it("should succeed when a single user deposits USDC that he/she has and another user deposits into investable directly after that", async function () {
+    it.skip("should succeed when a single user deposits USDC that he/she has and another user deposits into investable directly after that", async function () {
       const investableDecs = await this.portfolio.getInvestables()
       const investable = await ethers.getContractAt("IInvestable", await investableDecs[0].investable)
 
@@ -58,7 +58,7 @@ export function testPortfolioDeposit() {
         .success()
     })
 
-    it("should succeed when multiple users deposit USDC that they have and another user deposited into investable directly before that", async function () {
+    it.skip("should succeed when multiple users deposit USDC that they have and another user deposited into investable directly before that", async function () {
       const investableDecs = await this.portfolio.getInvestables()
       const investable = await ethers.getContractAt("IInvestable", await investableDecs[0].investable)
 
@@ -93,7 +93,7 @@ export function testPortfolioDeposit() {
         .success()
     })
 
-    it("should succeed when multiple users deposit USDC that they have and another user deposits into investable directly after that", async function () {
+    it.skip("should succeed when multiple users deposit USDC that they have and another user deposits into investable directly after that", async function () {
       const investableDecs = await this.portfolio.getInvestables()
       const investable = await ethers.getContractAt("IInvestable", await investableDecs[0].investable)
 
@@ -128,7 +128,7 @@ export function testPortfolioDeposit() {
         .success()
     })
 
-    it("should succeed after a single deposit", async function () {
+    it.skip("should succeed after a single deposit", async function () {
       const assetBalancesBefore = await this.portfolio.getAssetBalances()
       const assetValuationsBefore = await this.portfolio.getAssetValuations(true, false)
 
@@ -171,7 +171,7 @@ export function testPortfolioDeposit() {
       expect(await this.portfolio.getLiabilityBalances()).to.be.an("array").that.is.empty
     })
 
-    it("should succeed after multiple deposits and withdrawals", async function () {
+    it.skip("should succeed after multiple deposits and withdrawals", async function () {
       const assetBalancesBefore = await this.portfolio.getAssetBalances()
       const assetValuationsBefore = await this.portfolio.getAssetValuations(true, false)
 

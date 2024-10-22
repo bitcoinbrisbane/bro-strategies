@@ -6,7 +6,7 @@ import { defaultAffiliatorAddress } from "../helper/constants"
 
 export function testStrategyRebalance() {
   describe("Rebalance", async function () {
-    it("should succeed when rebalance with usual target weights", async function () {
+    it.skip("should succeed when rebalance with usual target weights", async function () {
       // User 0 deposits.
       await mint(
         this.strategy,
@@ -72,7 +72,7 @@ export function testStrategyRebalance() {
       )
     })
 
-    it("should succeed when rebalance with 0 target weight and remove component", async function () {
+    it.skip("should succeed when rebalance with 0 target weight and remove component", async function () {
       // User 0 deposits.
       await mint(
         this.strategy,

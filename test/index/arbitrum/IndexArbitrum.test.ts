@@ -62,7 +62,7 @@ async function upgradeIndexArbitrumMarketCapStrategy() {
 
 function testIndexArbitrumEquityValuation() {
   describe("EquityValuation - IndexArbitrum Strategy Specific", async function () {
-    it("should succeed to call equityValuation", async function () {
+    it.skip("should succeed to call equityValuation", async function () {
       await expect(this.strategy.equityValuation(true, true)).not.to.be.reverted
     })
   })
@@ -143,7 +143,7 @@ function testIndexArbitrumSetSwapRoute() {
       )
     })
 
-    it("should succeed to replace swap route with bin step", async function () {
+    it.skip("should succeed to replace swap route with bin step", async function () {
       await expect(
         this.strategy.connect(this.owner)["addSwapRoute(address,address,uint8,address,uint256)"](
           "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8", // USDC

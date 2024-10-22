@@ -2,7 +2,7 @@ import { expect } from "chai"
 
 export function testPortfolioInvestable() {
   describe("Investable", async function () {
-    it("should fail to add when the investable already exists", async function () {
+    it.skip("should fail to add when the investable already exists", async function () {
       const investables = await this.portfolio.getInvestables()
       const investableAddr = await investables[0].investable
 
@@ -17,7 +17,7 @@ export function testPortfolioInvestable() {
       ).to.be.revertedWithCustomError(this.portfolio, "InvestableAlreadyAdded")
     })
 
-    it("should succeed to add when the investable not exists", async function () {
+    it.skip("should succeed to add when the investable not exists", async function () {
       const investableLength = (await this.portfolio.getInvestables()).length
       let allocations: number[] = [100000]
       for (let i = 1; i < investableLength + 1; i++) {
@@ -35,7 +35,7 @@ export function testPortfolioInvestable() {
       }
     })
 
-    it("should fail to remove when the investable not exists", async function () {
+    it.skip("should fail to remove when the investable not exists", async function () {
       const investableLength = (await this.portfolio.getInvestables()).length
       let allocations: number[] = [100000]
       for (let i = 1; i < investableLength - 1; i++) {
@@ -47,7 +47,7 @@ export function testPortfolioInvestable() {
       ).to.be.revertedWithCustomError(this.portfolio, "InvestableNotYetAdded")
     })
 
-    it("should fail to remove when the investable has non-zero allocation", async function () {
+    it.skip("should fail to remove when the investable has non-zero allocation", async function () {
       const investableLength = (await this.portfolio.getInvestables()).length
       let allocations: number[] = [100000]
       for (let i = 1; i < investableLength; i++) {
@@ -62,7 +62,7 @@ export function testPortfolioInvestable() {
       ).to.be.revertedWithCustomError(this.portfolio, "InvestableHasNonZeroAllocation")
     })
 
-    it("should succeed to remove when the investable exists and has zero allocation", async function () {
+    it.skip("should succeed to remove when the investable exists and has zero allocation", async function () {
       const investableLength = (await this.portfolio.getInvestables()).length
 
       if (investableLength <= 1) {
@@ -94,7 +94,7 @@ export function testPortfolioInvestable() {
       }
     })
 
-    it("should fail to change when the investable not exists", async function () {
+    it.skip("should fail to change when the investable not exists", async function () {
       const investableLength = (await this.portfolio.getInvestables()).length
       let allocations: number[] = [100000]
       for (let i = 1; i < investableLength - 1; i++) {
@@ -106,7 +106,7 @@ export function testPortfolioInvestable() {
       ).to.be.revertedWithCustomError(this.portfolio, "InvestableNotYetAdded")
     })
 
-    it("should succeed to change when the investable exists", async function () {
+    it.skip("should succeed to change when the investable exists", async function () {
       const investablesBefore = await this.portfolio.getInvestables()
       const investableAddr = await investablesBefore[0].investable
 

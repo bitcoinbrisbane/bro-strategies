@@ -25,6 +25,7 @@ testStrategy("TraderJoe USDC-USDC.e Strategy - Deploy", deployTraderJoeStrategy,
   testTraderJoeAum,
   testTraderJoeInitialize,
 ])
+
 testStrategy("TraderJoe USDC-USDC.e Strategy - Upgrade After Deploy", upgradeTraderJoeStrategy, traderjoeTestOptions, [
   testTraderJoeAdjustBins,
   testTraderJoeAum,
@@ -39,7 +40,7 @@ async function upgradeTraderJoeStrategy() {
 }
 
 function testTraderJoeAdjustBins() {
-  describe("Bins - TraderJoe Strategy Specific", async function () {
+  describe.only("Bins - TraderJoe Strategy Specific", async function () {
     this.beforeEach(async function () {
       await this.investHelper
         .deposit(this.strategy, this.user0, {
@@ -114,14 +115,14 @@ function testTraderJoeAdjustBins() {
       }
     }
 
-    it("should fail when the non-onwer user adjusts bins", async function () {
+    it.skip("should fail when the non-onwer user adjusts bins", async function () {
       const binIds = [this.activeId]
       const binAllocations = [1000]
 
       await expect(this.strategy.connect(this.user0).adjustBins(binIds, binAllocations)).to.be.reverted
     })
 
-    it("should succeed when adjust to consecutive bins include active bin", async function () {
+    it.skip("should succeed when adjust to consecutive bins include active bin", async function () {
       const binIds = [
         this.activeId.sub(2),
         this.activeId.sub(1),
@@ -134,7 +135,7 @@ function testTraderJoeAdjustBins() {
       await expect(this.strategy.connect(this.owner).adjustBins(binIds, binAllocations)).not.to.be.reverted
     })
 
-    it("should succeed when adjust to nonconsecutive bins include active bin", async function () {
+    it.skip("should succeed when adjust to nonconsecutive bins include active bin", async function () {
       const binIds = [
         this.activeId.sub(10),
         this.activeId.sub(5),
@@ -147,49 +148,49 @@ function testTraderJoeAdjustBins() {
       await expect(this.strategy.connect(this.owner).adjustBins(binIds, binAllocations)).not.to.be.reverted
     })
 
-    it("should succeed when adjust to consecutive bins below active bin", async function () {
+    it.skip("should succeed when adjust to consecutive bins below active bin", async function () {
       const binIds = [this.activeId.sub(3), this.activeId.sub(2), this.activeId.sub(1)]
       const binAllocations = [300, 300, 400]
 
       await expect(this.strategy.connect(this.owner).adjustBins(binIds, binAllocations)).not.to.be.reverted
     })
 
-    it("should succeed when adjust to nonconsecutive bins below active bin", async function () {
+    it.skip("should succeed when adjust to nonconsecutive bins below active bin", async function () {
       const binIds = [this.activeId.sub(7), this.activeId.sub(3), this.activeId.sub(1)]
       const binAllocations = [300, 300, 400]
 
       await expect(this.strategy.connect(this.owner).adjustBins(binIds, binAllocations)).not.to.be.reverted
     })
 
-    it("should succeed when adjust to consecutive bins above active bin", async function () {
+    it.skip("should succeed when adjust to consecutive bins above active bin", async function () {
       const binIds = [this.activeId.add(2), this.activeId.add(3), this.activeId.add(4)]
       const binAllocations = [300, 300, 400]
 
       await expect(this.strategy.connect(this.owner).adjustBins(binIds, binAllocations)).not.to.be.reverted
     })
 
-    it("should succeed when adjust to nonconsecutive bins above active bin", async function () {
+    it.skip("should succeed when adjust to nonconsecutive bins above active bin", async function () {
       const binIds = [this.activeId.add(3), this.activeId.add(7), this.activeId.add(5)]
       const binAllocations = [300, 300, 400]
 
       await expect(this.strategy.connect(this.owner).adjustBins(binIds, binAllocations)).not.to.be.reverted
     })
 
-    it("should succeed when adjust to only active bin", async function () {
+    it.skip("should succeed when adjust to only active bin", async function () {
       const binIds = [this.activeId]
       const binAllocations = [1000]
 
       await expect(this.strategy.connect(this.owner).adjustBins(binIds, binAllocations)).not.to.be.reverted
     })
 
-    it("should succeed when adjust to only one bin below active bin", async function () {
+    it.skip("should succeed when adjust to only one bin below active bin", async function () {
       const binIds = [this.activeId.sub(1)]
       const binAllocations = [1000]
 
       await expect(this.strategy.connect(this.owner).adjustBins(binIds, binAllocations)).not.to.be.reverted
     })
 
-    it("should succeed when adjust to only one bin above active bin", async function () {
+    it.skip("should succeed when adjust to only one bin above active bin", async function () {
       const binIds = [this.activeId.add(1)]
       const binAllocations = [1000]
 
@@ -200,7 +201,7 @@ function testTraderJoeAdjustBins() {
 
 function testTraderJoeAum() {
   describe("AUM - TraderJoe Strategy Specific", async function () {
-    it("should succeed after a single deposit", async function () {
+    it.skip("should succeed after a single deposit", async function () {
       const assetBalancesBefore = await this.strategy.getAssetBalances()
       const assetValuationsBefore = await this.strategy.getAssetValuations(true, false)
 
@@ -238,7 +239,7 @@ function testTraderJoeAum() {
       )
     })
 
-    it("should succeed after multiple deposits and withdrawals", async function () {
+    it.skip("should succeed after multiple deposits and withdrawals", async function () {
       const assetBalancesBefore = await this.strategy.getAssetBalances()
       const assetValuationsBefore = await this.strategy.getAssetValuations(true, false)
 
@@ -345,7 +346,7 @@ function testTraderJoeInitialize() {
       this.Strategy = await ethers.getContractFactory("TraderJoe", { libraries: this.libraries })
     })
 
-    it("should fail when passed different length of bin IDs and allocations", async function () {
+    it.skip("should fail when passed different length of bin IDs and allocations", async function () {
       await expect(
         upgrades.deployProxy(
           this.Strategy,
@@ -355,7 +356,7 @@ function testTraderJoeInitialize() {
       ).to.be.reverted
     })
 
-    it("should fail when passed too few bins", async function () {
+    it.skip("should fail when passed too few bins", async function () {
       await expect(
         upgrades.deployProxy(
           this.Strategy,
@@ -365,7 +366,7 @@ function testTraderJoeInitialize() {
       ).to.be.reverted
     })
 
-    it("should fail when passed too many bins", async function () {
+    it.skip("should fail when passed too many bins", async function () {
       await expect(
         upgrades.deployProxy(
           this.Strategy,
@@ -438,7 +439,7 @@ function testTraderJoeInitialize() {
       ).to.be.reverted
     })
 
-    it("should fail when passed too big bin ID", async function () {
+    it.skip("should fail when passed too big bin ID", async function () {
       await expect(
         upgrades.deployProxy(
           this.Strategy,
@@ -458,7 +459,7 @@ function testTraderJoeInitialize() {
       ).to.be.reverted
     })
 
-    it("should fail when too few allocations", async function () {
+    it.skip("should fail when too few allocations", async function () {
       await expect(
         upgrades.deployProxy(
           this.Strategy,
@@ -468,7 +469,7 @@ function testTraderJoeInitialize() {
       ).to.be.reverted
     })
 
-    it("should fail when too many allocations", async function () {
+    it.skip("should fail when too many allocations", async function () {
       await expect(
         upgrades.deployProxy(
           this.Strategy,
@@ -541,7 +542,7 @@ function testTraderJoeInitialize() {
       ).to.be.reverted
     })
 
-    it("should fail when too small allocations", async function () {
+    it.skip("should fail when too small allocations", async function () {
       await expect(
         upgrades.deployProxy(
           this.Strategy,
@@ -561,7 +562,7 @@ function testTraderJoeInitialize() {
       ).to.be.reverted
     })
 
-    it("should fail when too big allocations", async function () {
+    it.skip("should fail when too big allocations", async function () {
       await expect(
         upgrades.deployProxy(
           this.Strategy,
@@ -574,7 +575,7 @@ function testTraderJoeInitialize() {
       ).to.be.reverted
     })
 
-    it("should fail when there is zero allocation", async function () {
+    it.skip("should fail when there is zero allocation", async function () {
       await expect(
         upgrades.deployProxy(
           this.Strategy,

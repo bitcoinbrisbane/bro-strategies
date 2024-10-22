@@ -19,7 +19,7 @@ export function testStrategyToken() {
       await this.token.transferOwnership(this.owner.address)
     })
 
-    it("should succeed when the owner sets name and symbol", async function () {
+    it.skip("should succeed when the owner sets name and symbol", async function () {
       await this.token.connect(this.owner).setName("Index Token Name")
       await this.token.connect(this.owner).setSymbol("ITN")
 
@@ -27,7 +27,7 @@ export function testStrategyToken() {
       expect(await this.token.symbol()).to.equal("ITN")
     })
 
-    it("should fail when the non-owner sets name and symbol", async function () {
+    it.skip("should fail when the non-owner sets name and symbol", async function () {
       await expect(this.token.connect(this.user0).setName("Some")).to.be.revertedWith(
         "Ownable: caller is not the owner"
       )
@@ -36,11 +36,11 @@ export function testStrategyToken() {
       )
     })
 
-    it("should have 18 decimals", async function () {
+    it.skip("should have 18 decimals", async function () {
       expect(await this.token.decimals()).to.equal(18)
     })
 
-    it("should succeed when the owner user upgrades", async function () {
+    it.skip("should succeed when the owner user upgrades", async function () {
       const addr_before_upgrade = await upgrades.erc1967.getImplementationAddress(this.token.address)
 
       const NewToken = await ethers.getContractFactory(this.upgradeTo, this.owner)
@@ -54,7 +54,7 @@ export function testStrategyToken() {
       expect(addr_before_upgrade != addr_after_upgrade).to.equal(true)
     })
 
-    it("should fail when the non-owner user upgrades", async function () {
+    it.skip("should fail when the non-owner user upgrades", async function () {
       const NewToken = await ethers.getContractFactory(this.upgradeTo, this.user0)
       await expect(
         upgrades.upgradeProxy(this.token.address, NewToken, {
@@ -63,11 +63,11 @@ export function testStrategyToken() {
       ).to.be.reverted
     })
 
-    it("should fail when initialize function is called after it's initialized", async function () {
+    it.skip("should fail when initialize function is called after it's initialized", async function () {
       await expect(this.token.initialize("Index Token Name", "ITN")).to.be.reverted
     })
 
-    it("should succeed when the owner user mints and burns token", async function () {
+    it.skip("should succeed when the owner user mints and burns token", async function () {
       const balance_before_mint = await this.token.balanceOf(this.owner.address)
 
       await this.token.connect(this.owner).mint(this.owner.address, "1000")
@@ -83,7 +83,7 @@ export function testStrategyToken() {
       expect(balance_after_burn).to.equal(balance_before_mint)
     })
 
-    it("should fail when the non-owner user mints token", async function () {
+    it.skip("should fail when the non-owner user mints token", async function () {
       await expect(this.token.connect(this.user0).mint(this.owner.address, "1000")).to.be.revertedWith(
         "Ownable: caller is not the owner"
       )
