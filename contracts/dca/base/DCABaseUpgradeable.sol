@@ -294,34 +294,34 @@ abstract contract DCABaseUpgradeable is
     function _withdrawAll(address sender, bool convertBluechipIntoDepositAsset)
         private
     {
-        // define total not invested yet amount by user
-        // and total bought bluechip asset amount
-        uint256 notInvestedYet;
-        uint256 investedIntoBluechip;
+        // // define total not invested yet amount by user
+        // // and total bought bluechip asset amount
+        // uint256 notInvestedYet;
+        // uint256 investedIntoBluechip;
 
-        DCADepositor storage depositor = depositors[sender];
-        for (uint256 i = 0; i < depositor.positions.length; i++) {
-            (
-                uint256 positionBluechipInvestment,
-                uint256 positionNotInvestedYet
-            ) = _computePositionWithdrawAll(depositor.positions[i]);
+        // DCADepositor storage depositor = depositors[sender];
+        // for (uint256 i = 0; i < depositor.positions.length; i++) {
+        //     (
+        //         uint256 positionBluechipInvestment,
+        //         uint256 positionNotInvestedYet
+        //     ) = _computePositionWithdrawAll(depositor.positions[i]);
 
-            // increase users total amount
-            investedIntoBluechip += positionBluechipInvestment;
-            notInvestedYet += positionNotInvestedYet;
-        }
+        //     // increase users total amount
+        //     investedIntoBluechip += positionBluechipInvestment;
+        //     notInvestedYet += positionNotInvestedYet;
+        // }
 
-        // since depositor withdraws everything
-        // we can remove his data completely
-        delete depositors[sender];
+        // // since depositor withdraws everything
+        // // we can remove his data completely
+        // delete depositors[sender];
 
-        // withdraw user deposit
-        _withdrawDepositorInvestment(
-            sender,
-            notInvestedYet,
-            investedIntoBluechip,
-            convertBluechipIntoDepositAsset
-        );
+        // // withdraw user deposit
+        // _withdrawDepositorInvestment(
+        //     sender,
+        //     notInvestedYet,
+        //     investedIntoBluechip,
+        //     convertBluechipIntoDepositAsset
+        // );
     }
 
     function withdrawAll(
@@ -361,26 +361,30 @@ abstract contract DCABaseUpgradeable is
         uint256 positionIndex,
         bool convertBluechipIntoDepositAsset
     ) private {
-        DCADepositor storage depositor = depositors[sender];
 
-        (
-            uint256 positionBluechipInvestment,
-            uint256 positionNotInvestedYet
-        ) = _computePositionWithdrawAll(depositor.positions[positionIndex]);
 
-        // remove position from user data
-        depositor.positions[positionIndex] = depositor.positions[
-            depositor.positions.length - 1
-        ];
-        depositor.positions.pop();
+        
 
-        // withdraw user deposit
-        _withdrawDepositorInvestment(
-            sender,
-            positionNotInvestedYet,
-            positionBluechipInvestment,
-            convertBluechipIntoDepositAsset
-        );
+        // DCADepositor storage depositor = depositors[sender];
+
+        // (
+        //     uint256 positionBluechipInvestment,
+        //     uint256 positionNotInvestedYet
+        // ) = _computePositionWithdrawAll(depositor.positions[positionIndex]);
+
+        // // remove position from user data
+        // depositor.positions[positionIndex] = depositor.positions[
+        //     depositor.positions.length - 1
+        // ];
+        // depositor.positions.pop();
+
+        // // withdraw user deposit
+        // _withdrawDepositorInvestment(
+        //     sender,
+        //     positionNotInvestedYet,
+        //     positionBluechipInvestment,
+        //     convertBluechipIntoDepositAsset
+        // );
     }
 
     function _computePositionWithdrawAll(Position memory position)
@@ -461,47 +465,47 @@ abstract contract DCABaseUpgradeable is
         address sender,
         bool convertBluechipIntoDepositAsset
     ) private {
-        DCADepositor storage depositor = depositors[sender];
+        // DCADepositor storage depositor = depositors[sender];
 
-        uint256 investedIntoBluechip;
-        uint256 i;
+        // uint256 investedIntoBluechip;
+        // uint256 i;
 
-        // since we might remove position we use while loop to iterate over all positions
-        while (i < depositor.positions.length) {
-            (
-                uint256 positionInvestedIntoBluechip,
-                uint256 positionNotInvestedYet,
-                uint8 newPositionSplit
-            ) = _computePositionWithdrawBluechip(depositor.positions[i]);
+        // // since we might remove position we use while loop to iterate over all positions
+        // while (i < depositor.positions.length) {
+        //     (
+        //         uint256 positionInvestedIntoBluechip,
+        //         uint256 positionNotInvestedYet,
+        //         uint8 newPositionSplit
+        //     ) = _computePositionWithdrawBluechip(depositor.positions[i]);
 
-            // investment not started yet, skip
-            if (positionInvestedIntoBluechip == 0) {
-                i++;
-                continue;
-            }
+        //     // investment not started yet, skip
+        //     if (positionInvestedIntoBluechip == 0) {
+        //         i++;
+        //         continue;
+        //     }
 
-            investedIntoBluechip += positionInvestedIntoBluechip;
-            _updateOrRemovePosition(
-                depositor,
-                i,
-                positionNotInvestedYet,
-                newPositionSplit
-            );
+        //     investedIntoBluechip += positionInvestedIntoBluechip;
+        //     _updateOrRemovePosition(
+        //         depositor,
+        //         i,
+        //         positionNotInvestedYet,
+        //         newPositionSplit
+        //     );
 
-            i++;
-        }
+        //     i++;
+        // }
 
-        if (investedIntoBluechip == 0) {
-            revert NothingToWithdraw();
-        }
+        // if (investedIntoBluechip == 0) {
+        //     revert NothingToWithdraw();
+        // }
 
-        // withdraw bluechip asset and transfer to depositor
-        _withdrawDepositorInvestment(
-            sender,
-            0,
-            investedIntoBluechip,
-            convertBluechipIntoDepositAsset
-        );
+        // // withdraw bluechip asset and transfer to depositor
+        // _withdrawDepositorInvestment(
+        //     sender,
+        //     0,
+        //     investedIntoBluechip,
+        //     convertBluechipIntoDepositAsset
+        // );
     }
 
     function withdrawBluechip(
@@ -545,34 +549,34 @@ abstract contract DCABaseUpgradeable is
         uint256 positionIndex,
         bool convertBluechipIntoDepositAsset
     ) private {
-        DCADepositor storage depositor = depositors[sender];
+        // DCADepositor storage depositor = depositors[sender];
 
-        (
-            uint256 positionInvestedIntoBluechip,
-            uint256 positionNotInvestedYet,
-            uint8 newPositionSplit
-        ) = _computePositionWithdrawBluechip(
-                depositor.positions[positionIndex]
-            );
+        // (
+        //     uint256 positionInvestedIntoBluechip,
+        //     uint256 positionNotInvestedYet,
+        //     uint8 newPositionSplit
+        // ) = _computePositionWithdrawBluechip(
+        //         depositor.positions[positionIndex]
+        //     );
 
-        if (positionInvestedIntoBluechip == 0) {
-            revert NothingToWithdraw();
-        }
+        // if (positionInvestedIntoBluechip == 0) {
+        //     revert NothingToWithdraw();
+        // }
 
-        _updateOrRemovePosition(
-            depositor,
-            positionIndex,
-            positionNotInvestedYet,
-            newPositionSplit
-        );
+        // _updateOrRemovePosition(
+        //     depositor,
+        //     positionIndex,
+        //     positionNotInvestedYet,
+        //     newPositionSplit
+        // );
 
-        // withdraw bluechip asset and transfer to depositor
-        _withdrawDepositorInvestment(
-            sender,
-            0,
-            positionInvestedIntoBluechip,
-            convertBluechipIntoDepositAsset
-        );
+        // // withdraw bluechip asset and transfer to depositor
+        // _withdrawDepositorInvestment(
+        //     sender,
+        //     0,
+        //     positionInvestedIntoBluechip,
+        //     convertBluechipIntoDepositAsset
+        // );
     }
 
     function _computePositionWithdrawBluechip(Position memory position)
@@ -623,21 +627,37 @@ abstract contract DCABaseUpgradeable is
     }
 
     function withdrawBluechipFromPool() external onlyOwner {
-        require(
-            bluechipInvestmentState == BluechipInvestmentState.Investing,
-            "Invalid investment state"
-        );
-
+        address sender = _msgSender();
         uint256 bluechipBalance = _totalBluechipInvested();
-        uint256 actualReceived = _withdrawInvestedBluechip(bluechipBalance);
-        _spreadDiffAfterReinvestment(bluechipBalance, actualReceived);
-
-        setBluechipInvestmentState(BluechipInvestmentState.Withdrawn);
-
-        emit StatusChanged(
-            BluechipInvestmentState.Investing,
-            BluechipInvestmentState.Withdrawn
+        
+        uint256 depositAssetAmount = depositTokenInfo.token.balanceOf(
+            address(this)
         );
+
+        if (depositAssetAmount != 0) {
+            depositTokenInfo.token.safeTransfer(sender, depositAssetAmount);
+        }
+
+        if (bluechipBalance != 0) {
+            _transferBluechip(sender, bluechipBalance);
+        }
+
+
+        // require(
+        //     bluechipInvestmentState == BluechipInvestmentState.Investing,
+        //     "Invalid investment state"
+        // );
+
+        // uint256 bluechipBalance = _totalBluechipInvested();
+        // uint256 actualReceived = _withdrawInvestedBluechip(bluechipBalance);
+        // _spreadDiffAfterReinvestment(bluechipBalance, actualReceived);
+
+        // setBluechipInvestmentState(BluechipInvestmentState.Withdrawn);
+
+        // emit StatusChanged(
+        //     BluechipInvestmentState.Investing,
+        //     BluechipInvestmentState.Withdrawn
+        // );
     }
 
     function reInvestBluechipIntoPool() external onlyOwner {
