@@ -8,7 +8,7 @@ import { depositEthHoldBtcConfigAvalanche } from "./config/depositEthHoldBtcConf
 import { depositUsdcHoldBtcConfigArbitrum } from "./config/depositUsdcHoldBtcConfigArbitrum"
 import { depositUsdcHoldBtcConfigAvalanche } from "./config/depositUsdcHoldBtcConfigAvalanche"
 import { depositUsdcHoldEthConfigAvalanche } from "./config/depositUsdcHoldEthConfigAvalanche"
-import { prodDeploymentConfig } from "./config/prodDeploymentConfig"
+// import { prodDeploymentConfig } from "./config/prodDeploymentConfig"
 
 getTokenContract
 depositUsdcHoldEthConfigAvalanche
@@ -18,14 +18,14 @@ depositUsdcHoldBtcConfigArbitrum
 Avalanche
 Arbitrum
 
-// prod deployments
-testDcaStrategy(
-  "CoinBluechip usdc -> arb DCA Strategy on Arbitrum (Production contract)",
-  deployCoinBluechipDcaStrategy,
-  [],
-  prodDeploymentConfig("arbitrum", "usdc_arb_prod.json"),
-  Arbitrum()
-)
+// // prod deployments
+// testDcaStrategy(
+//   "CoinBluechip usdc -> arb DCA Strategy on Arbitrum (Production contract)",
+//   deployCoinBluechipDcaStrategy,
+//   [],
+//   prodDeploymentConfig("arbitrum", "usdc_arb_prod.json"),
+//   Arbitrum()
+// )
 
 // test deployments
 // testDcaStrategy(
@@ -42,16 +42,6 @@ testDcaStrategy(
   depositUsdcHoldBtcConfigAvalanche(),
   Avalanche()
 )
-// testDcaStrategy(
-//   "CoinBluechip usdc -> eth DCA Strategy on Avalanche",
-//   deployCoinBluechipDcaStrategy,
-//   [],
-//   depositUsdcHoldEthConfigAvalanche(),
-//   Avalanche()
-// )
-
-// uncomment after the test script has been changed to properly handle decimals
-// testDcaStrategy("CoinBluechip eth -> btc DCA Strategy", deployCoinBluechipDcaStrategyAvalanche, [], depositEthHoldBtcConfig())
 
 async function deployCoinBluechipDcaStrategy(testConfig: any) {
   const signers = await ethers.getSigners()

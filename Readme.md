@@ -80,3 +80,8 @@ The most important thing is to bump the major version number at each breaking ch
 1. improve unified test performance
 1. write our own version of safeApprove: https://github.com/OpenZeppelin/openzeppelin-contracts/issues/2219
 1. In the current implementation a strategy cannot hold depositToken assets apart from the uninvested depositToken.
+
+
+```bash
+npx hardhat test test/dca/strategies/coinBluechip/coinBluechip.test.ts
+```

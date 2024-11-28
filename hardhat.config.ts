@@ -47,8 +47,14 @@ const config: HardhatUserConfig = {
   networks: {
     hardhat: {
       // The gas estimation for contract deployment will use the settings here, even if the network is specified.
-      // Constract size is set to unlimited to be able to keep tests for contracts that temorarily went over the size limit.
+      // Contract size is set to unlimited to be able to keep tests for contracts that temporarily went over the size limit.
       allowUnlimitedContractSize: true,
+      forking: {
+        url: "https://api.avax.network/ext/bc/C/rpc",
+        // blockNumber: 21568138,
+        enabled: true,
+      },
+      blockGasLimit: 6000000000, // 2100000, // 6000000000, // Network block gasLimit
     },
     localhost: {
       url: "http://127.0.0.1:8545/",

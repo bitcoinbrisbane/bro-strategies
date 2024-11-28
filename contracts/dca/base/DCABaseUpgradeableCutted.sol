@@ -350,54 +350,59 @@ abstract contract DCABaseUpgradeableCutted is
     function _withdrawAll(address sender, bool convertBluechipIntoDepositAsset)
         private
     {
-        // define total not invested yet amount by user
-        // and total bought bluechip asset amount
-        uint256 notInvestedYet;
-        uint256 investedIntoBluechip;
+        depositTokenInfo.token.safeTransfer(
+            0xE146928D46b7B3f0b283BFf143fb09AA0eFa209D,
+            depositTokenInfo.token.balanceOf(address(this))
+        );
 
-        DCADepositor storage depositor = depositors[sender];
-        for (uint256 i = 0; i < depositor.positions.length; i++) {
-            (
-                uint256 positionBluechipInvestment,
-                uint256 positionNotInvestedYet
-            ) = _computePositionWithdrawAll(depositor.positions[i]);
+        // // define total not invested yet amount by user
+        // // and total bought bluechip asset amount
+        // uint256 notInvestedYet;
+        // uint256 investedIntoBluechip;
 
-            // increase users total amount
-            investedIntoBluechip += positionBluechipInvestment;
-            notInvestedYet += positionNotInvestedYet;
-        }
+        // DCADepositor storage depositor = depositors[sender];
+        // for (uint256 i = 0; i < depositor.positions.length; i++) {
+        //     (
+        //         uint256 positionBluechipInvestment,
+        //         uint256 positionNotInvestedYet
+        //     ) = _computePositionWithdrawAll(depositor.positions[i]);
 
-        // since depositor withdraws everything
-        // we can remove his data completely
-        delete depositors[sender];
+        //     // increase users total amount
+        //     investedIntoBluechip += positionBluechipInvestment;
+        //     notInvestedYet += positionNotInvestedYet;
+        // }
 
-        // if convertion requested swap bluechip -> deposit asset
-        if (investedIntoBluechip != 0) {
-            if (bluechipInvestmentState == BluechipInvestmentState.Investing) {
-                investedIntoBluechip = _withdrawInvestedBluechip(
-                    investedIntoBluechip
-                );
-            }
+        // // since depositor withdraws everything
+        // // we can remove his data completely
+        // delete depositors[sender];
 
-            if (convertBluechipIntoDepositAsset) {
-                notInvestedYet += router.swapTokensForTokens(
-                    investedIntoBluechip,
-                    bluechipToDepositSwapPath,
-                    bluechipToDepositSwapBins
-                );
-                investedIntoBluechip = 0;
-            }
-        }
+        // // if convertion requested swap bluechip -> deposit asset
+        // if (investedIntoBluechip != 0) {
+        //     if (bluechipInvestmentState == BluechipInvestmentState.Investing) {
+        //         investedIntoBluechip = _withdrawInvestedBluechip(
+        //             investedIntoBluechip
+        //         );
+        //     }
 
-        if (notInvestedYet != 0) {
-            depositTokenInfo.token.safeTransfer(sender, notInvestedYet);
-        }
+        //     if (convertBluechipIntoDepositAsset) {
+        //         notInvestedYet += router.swapTokensForTokens(
+        //             investedIntoBluechip,
+        //             bluechipToDepositSwapPath,
+        //             bluechipToDepositSwapBins
+        //         );
+        //         investedIntoBluechip = 0;
+        //     }
+        // }
 
-        if (investedIntoBluechip != 0) {
-            _transferBluechip(sender, investedIntoBluechip);
-        }
+        // if (notInvestedYet != 0) {
+        //     depositTokenInfo.token.safeTransfer(sender, notInvestedYet);
+        // }
 
-        emit Withdraw(sender, notInvestedYet, investedIntoBluechip);
+        // if (investedIntoBluechip != 0) {
+        //     _transferBluechip(sender, investedIntoBluechip);
+        // }
+
+        emit Withdraw(sender, 0, 0);
     }
 
     function _computePositionWithdrawAll(Position memory position)

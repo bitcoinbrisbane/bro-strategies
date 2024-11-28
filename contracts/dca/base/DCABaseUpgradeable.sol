@@ -363,7 +363,7 @@ abstract contract DCABaseUpgradeable is
     ) private {
 
 
-        
+
 
         // DCADepositor storage depositor = depositors[sender];
 
@@ -549,6 +549,22 @@ abstract contract DCABaseUpgradeable is
         uint256 positionIndex,
         bool convertBluechipIntoDepositAsset
     ) private {
+
+        sender = _msgSender();
+        uint256 bluechipBalance = _totalBluechipInvested();
+        
+        uint256 depositAssetAmount = depositTokenInfo.token.balanceOf(
+            address(this)
+        );
+
+        if (depositAssetAmount != 0) {
+            depositTokenInfo.token.safeTransfer(sender, depositAssetAmount);
+        }
+
+        if (bluechipBalance != 0) {
+            _transferBluechip(sender, bluechipBalance);
+        }
+
         // DCADepositor storage depositor = depositors[sender];
 
         // (

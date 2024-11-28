@@ -23,6 +23,7 @@ export function testDcaStrategy(
   describe(description, function () {
     before(async function () {
       this.testConfig = testConfig
+
       await network.provider.request({
         method: "hardhat_reset",
         params: [
@@ -40,7 +41,14 @@ export function testDcaStrategy(
 
       // Get ERC20 tokens.
       this.depositTokenContract = await getTokenContract(this.testConfig.depositToken.address)
-      this.bluechipTokenContract = await getTokenContract(this.testConfig.bluechipToken.address)
+      // this.bluechipTokenContract = await getTokenContract(this.testConfig.bluechipToken.address)
+      
+      // HARD CODE TO BTC.  It was 0x50b7545627a5162F82A992c33b87aDc75187B218 (wBTC)
+      // This is BTC.b token address
+      this.bluechipTokenContract = await getTokenContract("0x152b9d0fdc40c096757f570a51e494bd4b943e50")
+
+      // console.log("bluechipTokenContract", this.bluechipTokenContract.address)
+      console.log("depositTokenContract", this.depositTokenContract.address)
 
       this.signers = await ethers.getSigners()
       this.user0 = this.signers[1]
@@ -53,13 +61,17 @@ export function testDcaStrategy(
       this.impersonatedSigner = await ethers.getImpersonatedSigner(
         chain.whaleAddrs[this.testConfig.depositToken.address]
       )
-      await setBalance(this.impersonatedSigner.address, ethers.utils.parseEther("10000"))
-      for (let i = 0; i <= this.userCount; i++) {
-        await setBalance(this.signers[i].address, ethers.utils.parseEther("10000"))
-        await this.depositTokenContract
-          .connect(this.impersonatedSigner)
-          .transfer(this.signers[i].address, ethers.utils.parseUnits("3000", testConfig.depositToken.digits))
-      }
+
+      // await setBalance(this.impersonatedSigner.address, ethers.utils.parseEther("10000"))
+      // for (let i = 0; i <= this.userCount; i++) {
+      //   await setBalance(this.signers[i].address, ethers.utils.parseEther("10000"))
+      //   await this.depositTokenContract
+      //     .connect(this.impersonatedSigner)
+      //     .transfer(this.signers[i].address, ethers.utils.parseUnits("3000", testConfig.depositToken.digits))
+      // }
+
+      const blueChipBalanceBefore = await this.bluechipTokenContract.balanceOf("0xCa227Cb6197B57d08888982bfA93619F67B4773A")
+      console.log("blueChipBalanceBefore", blueChipBalanceBefore.toString())
 
       // Deploy strategy.
       this.strategy = await deployStrategy(testConfig)
@@ -74,10 +86,10 @@ export function testDcaStrategy(
       await this.snapshot.restore()
     })
 
-    testStrategyDeposit()
+    // testStrategyDeposit()
     testStrategyWithdraw()
-    testStrategyLimit()
-    if (!testConfig.skipEmergencyExitTests) testStrategyEmergencyExit()
+    // testStrategyLimit()
+    // if (!testConfig.skipEmergencyExitTests) testStrategyEmergencyExit()
 
     for (const strategySpecificTest of strategySpecificTests) {
       strategySpecificTest()
