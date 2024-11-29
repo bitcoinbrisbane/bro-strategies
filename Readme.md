@@ -83,5 +83,6 @@ The most important thing is to bump the major version number at each breaking ch
 
 
 ```bash
+nvm use 18.20
 npx hardhat test test/dca/strategies/coinBluechip/coinBluechip.test.ts
 ```

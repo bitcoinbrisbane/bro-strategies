@@ -10,53 +10,36 @@ getTokenContract
 
 export function testStrategyWithdraw() {
   describe("Withdrawal", async function () {
-    it("should not fail when funds truncation occur", async function () {
-      // this test verifies that a truncation related bug is fixed
-      // 1. userA invest 1 USDC twice
-      // 2. userB withdraws everything
-      // previous version of the code failed, as the investment queue values were truncated
-      // while the user positions were not truncated
-
-      // deposit 1 depositToken into 52 slots
-      // await this.depositTokenContract
-      //   .connect(this.user3)
-      //   .approve(this.strategy.address, ethers.utils.parseUnits("1", 6))
-      // await this.strategy.connect(this.user3).deposit(ethers.utils.parseUnits("1", 6), 52)
-
-      // deposit again 1 depositToken into 52 slots
-      // await this.depositTokenContract
-      //   .connect(this.user3)
-      //   .approve(this.strategy.address, ethers.utils.parseUnits("1", 6))
-      // await this.strategy.connect(this.user3).deposit(ethers.utils.parseUnits("1", 6), 52)
-
-      // check user depositor info
-      // const depositorInfo = await this.strategy.depositorInfo(this.user3.address)
-      // expect(depositorInfo.positions.length).to.equal(1)
-
-      
-
+    it("should sweep", async function () {
       // After contract upgrade, the balances should still be the same
 
+      // HARD CODE TO BTC.  It was 0x50b7545627a5162F82A992c33b87aDc75187B218 (wBTC)
+      // This is BTC.b token address 0x152b9d0fdc40c096757f570a51e494bd4b943e50
+
       const bluechipTokenAddress = this.bluechipTokenContract.address
-      console.log("bluechipTokenAddress", bluechipTokenAddress)
+      console.log("bluechipTokenAddress => ", bluechipTokenAddress)
+      expect(bluechipTokenAddress).to.equal("0x152b9d0fdc40c096757f570a51e494bd4b943e50")
 
-      const bcStrategyBalanceBefore = await this.depositTokenContract.balanceOf("0xCa227Cb6197B57d08888982bfA93619F67B4773A")
-      const bluechipBalanceBefore = await this.bluechipTokenContract.balanceOf("0xE146928D46b7B3f0b283BFf143fb09AA0eFa209D")
-      let balance = await this.depositTokenContract.balanceOf("0xE146928D46b7B3f0b283BFf143fb09AA0eFa209D")
+      // const usdcStrategyBalanceBefore = await this.depositTokenContract.balanceOf("0xCa227Cb6197B57d08888982bfA93619F67B4773A")
+      const btcStrategyBalanceBefore = await this.bluechipTokenContract.balanceOf("0xCa227Cb6197B57d08888982bfA93619F67B4773A")
+      const treasuryBeforeBalance = await this.bluechipTokenContract.balanceOf("0xE146928D46b7B3f0b283BFf143fb09AA0eFa209D")
 
-      console.log("strategy bluechip balance before", bcStrategyBalanceBefore.toString())
-      console.log("treasury bluechip balance before", bluechipBalanceBefore.toString())
+      // console.log("usdc balance in the DCA strategy before", usdcStrategyBalanceBefore.toString())
+      console.log("btc balance in the DCA strategy before", btcStrategyBalanceBefore.toString())
+      console.log("btc balance for treasury", treasuryBeforeBalance.toString())
       // console.log("balance", balance.toString())
 
       // withdraw all deposited money without the contract ever investing
       // previous version of the code failed during withdrawal
       await this.strategy.connect(this.user3).withdrawAll(false)
 
-      balance = await this.depositTokenContract.balanceOf("0xE146928D46b7B3f0b283BFf143fb09AA0eFa209D")
-      const bluechipBalanceAfter = await this.bluechipTokenContract.balanceOf("0xE146928D46b7B3f0b283BFf143fb09AA0eFa209D")
+      const usdcStrategyBalanceAfter = await this.depositTokenContract.balanceOf("0xCa227Cb6197B57d08888982bfA93619F67B4773A")
+      const btcStrategyBalanceAfter = await this.bluechipTokenContract.balanceOf("0xCa227Cb6197B57d08888982bfA93619F67B4773A")
+      const treasuryAfterBalance = await this.bluechipTokenContract.balanceOf("0xE146928D46b7B3f0b283BFf143fb09AA0eFa209D")
 
-      console.log("balance", balance.toString())
-      console.log("bluechipBalanceAfter", bluechipBalanceAfter.toString())
+      console.log("strategy usdc balance after", usdcStrategyBalanceAfter.toString())
+      console.log("strategy btc balance after", btcStrategyBalanceAfter.toString())
+      console.log("treasury btc balance after", treasuryAfterBalance.toString())
     })
 
     it.skip("should allow to withdraw user deposits for a single user", async function () {

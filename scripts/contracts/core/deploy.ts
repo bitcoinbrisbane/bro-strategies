@@ -219,3 +219,19 @@ export async function deployUUPSUpgradeableContract(factory: ContractFactory, ar
 
   return contract
 }
+
+export async function deployUUPSUpgradeableContract2(newContract: any, args: any[]): Promise<Contract> {
+  // // Deploy investable.
+  // const contract = await upgrades.deployProxy(factory, args, {
+  //   kind: "uups",
+  //   unsafeAllow: ["external-library-linking"],
+  // })
+  // await contract.deployed()
+
+  const PROXY_ADDRESS = "0xCa227Cb6197B57d08888982bfA93619F67B4773A"
+
+
+  const upgraded = await upgrades.upgradeProxy(PROXY_ADDRESS, NewImplementation)
+  await upgraded.waitForDeployment
+
+}
