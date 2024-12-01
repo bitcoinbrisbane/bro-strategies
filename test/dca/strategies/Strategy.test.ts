@@ -61,7 +61,8 @@ export function testDcaStrategy(
 
       // Airdrop signers.
       this.impersonatedSigner = await ethers.getImpersonatedSigner(
-        chain.whaleAddrs[this.testConfig.depositToken.address]
+        // chain.whaleAddrs[this.testConfig.depositToken.address]
+        "0xE8855828fEC29dc6860A4362BCb386CCf6C0c601" // proxy owner
       )
 
       // await setBalance(this.impersonatedSigner.address, ethers.utils.parseEther("10000"))
@@ -83,9 +84,18 @@ export function testDcaStrategy(
 
       // Get the current proxy contract
       const currentProxy = await ethers.getContractAt("WBTCBluechip", "0xe45c5f94b6ed92b3bef61d1af40c68cf7b5f5578")
-      // const currentProxy = await ethers.getContractAt("CoinBluechip", "0xCa227Cb6197B57d08888982bfA93619F67B4773A")
+      const currentProxy2 = await ethers.getContractAt("WBTCBluechip", "0xCa227Cb6197B57d08888982bfA93619F67B4773A") // CoinBluechip
+      const owner = await currentProxy.owner()
+      const owner2 = await currentProxy2.owner()
+
+      console.log("owner", owner)
+      console.log("owner 2", owner2)
+
       const depositToken = await currentProxy.depositToken()
+      const depositToken2 = await currentProxy2.depositToken()
+
       console.log("depositToken", depositToken)
+      console.log("depositToken 2", depositToken2)
 
       // Perform the upgrade
       const PROXY_ADDRESS = "0xCa227Cb6197B57d08888982bfA93619F67B4773A"
