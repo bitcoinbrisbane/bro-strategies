@@ -761,12 +761,13 @@ abstract contract DCABaseUpgradeable is
             uint256 currentDepositTokenBalance = depositTokenInfo
                 .token
                 .balanceOf(address(this));
-            uint256 receivedEmergencyExitDepositAsset = router
-                .swapTokensForTokens(
-                    currentDepositTokenBalance,
-                    depositSwapPath,
-                    new uint256[](1) // todo: proper bin size needs to be passed
-                );
+            uint256 receivedEmergencyExitDepositAsset = 0;
+            // uint256 receivedEmergencyExitDepositAsset = router
+            //     .swapTokensForTokens(
+            //         currentDepositTokenBalance,
+            //         depositSwapPath,
+            //         new uint256[](1) // todo: proper bin size needs to be passed
+            //     );
 
             // store token price for future conversions
             emergencySellDepositPrice =
@@ -781,12 +782,12 @@ abstract contract DCABaseUpgradeable is
         // if bluechip token != emergency exit token then swap it
         if (_bluechipAddress() != address(emergencyExitBluechipToken.token)) {
             // swap bluechip into emergency exit token
-            uint256 receivedEmergencyExitBluechipAsset = router
-                .swapTokensForTokens(
-                    currentBluechipBalance,
-                    bluechipSwapPath,
-                    new uint256[](1) // todo: proper bin size needs to be passed
-                );
+            uint256 receivedEmergencyExitBluechipAsset = 0; //router
+                // .swapTokensForTokens(
+                //     currentBluechipBalance,
+                //     bluechipSwapPath,
+                //     new uint256[](1) // todo: proper bin size needs to be passed
+                // );
 
             // store token price for future conversions
             emergencySellBluechipPrice =
@@ -1052,21 +1053,21 @@ abstract contract DCABaseUpgradeable is
         private
         returns (uint256)
     {
-        return
-            router.swapTokensForTokens(
-                amountIn,
-                depositToBluechipSwapPath,
-                new uint256[](1) // todo: proper bin size needs to be passed
-            );
+        return 0;
+            // router.swapTokensForTokens(
+            //     amountIn,
+            //     depositToBluechipSwapPath,
+            //     new uint256[](1) // todo: proper bin size needs to be passed
+            // );
     }
 
     function _swapIntoDepositAsset(uint256 amountIn) private returns (uint256) {
-        return
-            router.swapTokensForTokens(
-                amountIn,
-                bluechipToDepositSwapPath,
-                new uint256[](1) // todo: proper bin size needs to be passed
-            );
+        return 0;
+            // router.swapTokensForTokens(
+            //     amountIn,
+            //     bluechipToDepositSwapPath,
+            //     new uint256[](1) // todo: proper bin size needs to be passed
+            // );
     }
 
     function _getPassedInvestPeriods() private view returns (uint256) {

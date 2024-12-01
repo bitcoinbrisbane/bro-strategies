@@ -74,7 +74,7 @@ async function deployCoinBluechipDcaStrategy(testConfig: any) {
   //   [address, testConfig.bluechipToken.digits],
   // ])
 
-  const currentImplementation = "0xe45c5f94b6ed92b3bef61d1af40c68cf7b5f5578"
+  // const currentImplementation = "0xe45c5f94b6ed92b3bef61d1af40c68cf7b5f5578"
 
   return await deployUUPSUpgradeableContract(coinBluechip, [
     [

@@ -79,10 +79,10 @@ export function testDcaStrategy(
 
 
 
-      const NewImplementation = await ethers.getContractFactory("CoinBluechip")
+      const NewImplementation = await ethers.getContractFactory("WBTCBluechip")
 
       // Get the current proxy contract
-      const currentProxy = await ethers.getContractAt("CoinBluechip", "0xe45c5f94b6ed92b3bef61d1af40c68cf7b5f5578")
+      const currentProxy = await ethers.getContractAt("WBTCBluechip", "0xe45c5f94b6ed92b3bef61d1af40c68cf7b5f5578")
       // const currentProxy = await ethers.getContractAt("CoinBluechip", "0xCa227Cb6197B57d08888982bfA93619F67B4773A")
       const depositToken = await currentProxy.depositToken()
       console.log("depositToken", depositToken)
@@ -93,7 +93,7 @@ export function testDcaStrategy(
       const upgraded = await upgrades.upgradeProxy(PROXY_ADDRESS, NewImplementation)
       await upgraded.waitForDeployment()
 
-
+      console.log("upgraded", upgraded.address, " LFG!!!")
 
       // Deploy strategy.
       this.strategy = await deployStrategy(testConfig)
