@@ -59,32 +59,26 @@ export function testDcaStrategy(
       this.user3 = this.signers[4]
       this.userCount = 4
 
-      // Airdrop signers.
+      // NOTES https://github.com/OpenZeppelin/openzeppelin-upgrades/issues/370
       this.impersonatedSigner = await ethers.getImpersonatedSigner(
-        // chain.whaleAddrs[this.testConfig.depositToken.address]
         "0xE8855828fEC29dc6860A4362BCb386CCf6C0c601" // proxy owner
+        // "0x0000000000000000000000000000000000000000"
       )
-
-      // await setBalance(this.impersonatedSigner.address, ethers.utils.parseEther("10000"))
-      // for (let i = 0; i <= this.userCount; i++) {
-      //   await setBalance(this.signers[i].address, ethers.utils.parseEther("10000"))
-      //   await this.depositTokenContract
-      //     .connect(this.impersonatedSigner)
-      //     .transfer(this.signers[i].address, ethers.utils.parseUnits("3000", testConfig.depositToken.digits))
-      // }
-
       // const blueChipBalanceBefore = await this.bluechipTokenContract.balanceOf("0xCa227Cb6197B57d08888982bfA93619F67B4773A")
       // console.log("blueChipBalanceBefore", blueChipBalanceBefore.toString())
 
 
+      const GMX_PROXY = "0xF96Df0DB82Ebec3F5e8043C26522608f09c68600"
 
+      const PROXY_ADDRESS = "0xCa227Cb6197B57d08888982bfA93619F67B4773A"
+      const IMPLEMENTATION_ADDRESS = "0xe45c5f94b6ed92b3bef61d1af40c68cf7b5f5578"
 
+      // const NewImplementation = await ethers.getContractFactory("WBTCBluechip")
+      const NewImplementation = await ethers.getContractFactory("CoinBluechip")
 
-      const NewImplementation = await ethers.getContractFactory("WBTCBluechip")
-
-      // Get the current proxy contract
-      const currentProxy = await ethers.getContractAt("WBTCBluechip", "0xe45c5f94b6ed92b3bef61d1af40c68cf7b5f5578")
-      const currentProxy2 = await ethers.getContractAt("WBTCBluechip", "0xCa227Cb6197B57d08888982bfA93619F67B4773A") // CoinBluechip
+      // Get the current proxy contract and check values
+      const currentProxy = await ethers.getContractAt("CoinBluechip", IMPLEMENTATION_ADDRESS, this.impersonatedSigner)
+      const currentProxy2 = await ethers.getContractAt("CoinBluechip", GMX_PROXY, this.impersonatedSigner) // CoinBluechip
       const owner = await currentProxy.owner()
       const owner2 = await currentProxy2.owner()
 
@@ -97,21 +91,13 @@ export function testDcaStrategy(
       console.log("depositToken", depositToken)
       console.log("depositToken 2", depositToken2)
 
+      // await currentProxy.renounceOwnership()
+
       // Perform the upgrade
-      const PROXY_ADDRESS = "0xCa227Cb6197B57d08888982bfA93619F67B4773A"
-      // const PROXY_ADDRESS = "0xe45c5f94b6ed92b3bef61d1af40c68cf7b5f5578"
-      const upgraded = await upgrades.upgradeProxy(PROXY_ADDRESS, NewImplementation)
-      await upgraded.waitForDeployment()
+      // const upgraded = await upgrades.upgradeProxy(GMX_PROXY, NewImplementation)
+      const upgraded = await upgrades.forceImport(GMX_PROXY, NewImplementation)
 
       console.log("upgraded", upgraded.address, " LFG!!!")
-
-      // Deploy strategy.
-      this.strategy = await deployStrategy(testConfig)
-
-      const ownerAddr = await this.strategy.owner()
-      this.owner = await ethers.getImpersonatedSigner(ownerAddr)
-
-      this.snapshot = await takeSnapshot()
     })
 
     beforeEach(async function () {
