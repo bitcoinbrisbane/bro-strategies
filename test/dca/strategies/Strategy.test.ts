@@ -59,9 +59,14 @@ export function testDcaStrategy(
       this.user3 = this.signers[4]
       this.userCount = 4
 
+      // new guy, by randomiser https://snowscan.xyz/address/0xF96Df0DB82Ebec3F5e8043C26522608f09c68600#readProxyContract
+
+// Changed the owner of the GMX DCA to the deployer address (+ sent some AVAX for the gas). Let's test the upgrade when possible
+// 0x0625Db97368dF1805314E68D0E63e5eB154B9AE6
+
       // NOTES https://github.com/OpenZeppelin/openzeppelin-upgrades/issues/370
       this.impersonatedSigner = await ethers.getImpersonatedSigner(
-        "0xE8855828fEC29dc6860A4362BCb386CCf6C0c601" // proxy owner
+        "0xDE971dAc0009Dfb373AcEE32F94777AF2E38e56C" // proxy owner
         // "0x0000000000000000000000000000000000000000"
       )
       // const blueChipBalanceBefore = await this.bluechipTokenContract.balanceOf("0xCa227Cb6197B57d08888982bfA93619F67B4773A")

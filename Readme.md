@@ -82,6 +82,7 @@ The most important thing is to bump the major version number at each breaking ch
 1. In the current implementation a strategy cannot hold depositToken assets apart from the uninvested depositToken.
 
 
+NOTES to upgrade
 ```bash
 nvm use 18.20
 npx hardhat test test/dca/strategies/coinBluechip/coinBluechip.test.ts
