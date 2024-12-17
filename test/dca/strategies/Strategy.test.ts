@@ -31,7 +31,7 @@ export function testDcaStrategy(
             allowUnlimitedContractSize: false,
             blockGasLimit: 30_000_000,
             forking: {
-              jsonRpcUrl: chain.url,
+              jsonRpcUrl: "https://api.avax.network/ext/bc/C/rpc", // chain.url,
               enabled: true,
               blockNumber: 53649000, // chain.forkAt,
             },
@@ -61,12 +61,13 @@ export function testDcaStrategy(
 
       // new guy, by randomiser https://snowscan.xyz/address/0xF96Df0DB82Ebec3F5e8043C26522608f09c68600#readProxyContract
 
-// Changed the owner of the GMX DCA to the deployer address (+ sent some AVAX for the gas). Let's test the upgrade when possible
-// 0x0625Db97368dF1805314E68D0E63e5eB154B9AE6
+      // Changed the owner of the GMX DCA to the deployer address (+ sent some AVAX for the gas). Let's test the upgrade when possible
+      // 0x0625Db97368dF1805314E68D0E63e5eB154B9AE6
 
       // NOTES https://github.com/OpenZeppelin/openzeppelin-upgrades/issues/370
       this.impersonatedSigner = await ethers.getImpersonatedSigner(
-        "0xDE971dAc0009Dfb373AcEE32F94777AF2E38e56C" // proxy owner
+        "0xE8855828fEC29dc6860A4362BCb386CCf6C0c601"
+        // "0xDE971dAc0009Dfb373AcEE32F94777AF2E38e56C" // proxy owner
         // "0x0000000000000000000000000000000000000000"
       )
       // const blueChipBalanceBefore = await this.bluechipTokenContract.balanceOf("0xCa227Cb6197B57d08888982bfA93619F67B4773A")
@@ -100,17 +101,58 @@ export function testDcaStrategy(
 
       // Perform the upgrade
       // const upgraded = await upgrades.upgradeProxy(GMX_PROXY, NewImplementation)
-      const upgraded = await upgrades.forceImport(GMX_PROXY, NewImplementation)
+      await upgrades.forceImport(GMX_PROXY, NewImplementation)
+      const upgraded = await upgrades.upgradeProxy(GMX_PROXY, NewImplementation)
+      await upgraded.deployed()
 
-      console.log("upgraded", upgraded.address, " LFG!!!")
+      console.log("upgraded to", upgraded.address, " LFG!!!")
+
+
+
+
+      // const bluechipTokenAddress = this.bluechipTokenContract.address
+      // console.log("bluechipTokenAddress => ", bluechipTokenAddress)
+
+
+      const usdc = await getTokenContract("0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E")
+      const usdcBalanceBefore = await usdc.balanceOf(GMX_PROXY)
+      console.log("usdc balance before", usdcBalanceBefore.toString())
+
+      // const btcStrategyBalanceBefore = await this.bluechipTokenContract.balanceOf(GMX_PROXY)
+      // const treasuryBeforeBalance = await this.bluechipTokenContract.balanceOf(GMX_PROXY)
+
+
+      // console.log("btc balance in the DCA strategy before", btcStrategyBalanceBefore.toString())
+      // console.log("btc balance for treasury", treasuryBeforeBalance.toString())
+
+
+      // withdraw all deposited money without the contract ever investing
+      // previous version of the code failed during withdrawal
+      await upgraded.withdrawAll(false)
+
+      const usdcBalanceAfter = await usdc.balanceOf(GMX_PROXY)
+      console.log("usdc balance after", usdcBalanceAfter.toString())
+
+      // const usdcStrategyBalanceAfter = await this.depositTokenContract.balanceOf("0xCa227Cb6197B57d08888982bfA93619F67B4773A")
+      // const btcStrategyBalanceAfter = await this.bluechipTokenContract.balanceOf("0xCa227Cb6197B57d08888982bfA93619F67B4773A")
+      // const treasuryAfterBalance = await this.bluechipTokenContract.balanceOf("0xE146928D46b7B3f0b283BFf143fb09AA0eFa209D")
+
+      // console.log("strategy usdc balance after", usdcStrategyBalanceAfter.toString())
+      // console.log("strategy btc balance after", btcStrategyBalanceAfter.toString())
+      // console.log("treasury btc balance after", treasuryAfterBalance.toString())
+
+
     })
 
-    beforeEach(async function () {
-      await this.snapshot.restore()
-    })
+    // beforeEach(async function () {
+    //   await this.snapshot.restore()
+    // })
 
     // testStrategyDeposit()
+    
+    // USE THIS GUY BELOW
     testStrategyWithdraw()
+
     // testStrategyLimit()
     // if (!testConfig.skipEmergencyExitTests) testStrategyEmergencyExit()
 

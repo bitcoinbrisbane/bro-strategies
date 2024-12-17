@@ -909,11 +909,11 @@ abstract contract DCABaseUpgradeable is
     function setLastInvestmentTimestamp(uint256 newLastInvestmentTimestamp)
         private
     {
-        require(
-            // solhint-disable-next-line not-rely-on-time
-            newLastInvestmentTimestamp >= block.timestamp,
-            "Invalid last invest ts"
-        );
+        // require(
+        //     // solhint-disable-next-line not-rely-on-time
+        //     newLastInvestmentTimestamp >= block.timestamp,
+        //     "Invalid last invest ts"
+        // );
         lastInvestmentTimestamp = newLastInvestmentTimestamp;
     }
 

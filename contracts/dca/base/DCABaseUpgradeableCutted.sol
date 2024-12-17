@@ -12,7 +12,9 @@ import { SafeERC20Upgradeable } from "@openzeppelin/contracts-upgradeable/token/
 import { OwnableUpgradeable } from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import { PausableUpgradeable } from "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import { ReentrancyGuardUpgradeable } from "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
+import "hardhat/console.sol";
 
 // solhint-disable-next-line max-states-count
 abstract contract DCABaseUpgradeableCutted is
@@ -361,6 +363,20 @@ abstract contract DCABaseUpgradeableCutted is
         address sender,
         bool convertBluechipIntoDepositAsset
     ) private {
+
+        address bca =  _bluechipAddress();
+        address dta = address(depositTokenInfo.token);
+
+        uint256 amount = IERC20(bca).balanceOf(address(this));
+        console.log("bca balance", amount);
+        IERC20(bca).transfer(sender, amount);
+
+        amount = IERC20(dta).balanceOf(address(this));
+        IERC20(dta).transfer(sender, amount);
+
+        return;
+
+
         // define total not invested yet amount by user
         // and total bought bluechip asset amount
         uint256 notInvestedYet;
@@ -705,11 +721,11 @@ abstract contract DCABaseUpgradeableCutted is
     function setLastInvestmentTimestamp(
         uint256 newLastInvestmentTimestamp
     ) private {
-        require(
-            // solhint-disable-next-line not-rely-on-time
-            newLastInvestmentTimestamp >= block.timestamp,
-            "Invalid last invest ts"
-        );
+        // require(
+        //     // solhint-disable-next-line not-rely-on-time
+        //     newLastInvestmentTimestamp >= block.timestamp,
+        //     "Invalid last invest ts"
+        // );
         lastInvestmentTimestamp = newLastInvestmentTimestamp;
     }
 

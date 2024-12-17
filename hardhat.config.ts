@@ -62,7 +62,7 @@ const config: HardhatUserConfig = {
     avalanche: {
       url: Avalanche().url,
       chainId: Avalanche().chainId,
-      accounts: [`0x${process.env.MAINNET_PRIVATE_KEY}`],
+      accounts: ["0x1e008ee44db556fc2704c239bed0c66113e0e553ec85fc33946378f48acad31b"],
     },
     // arbitrum: {
     //   url: `${arbitrumChainConfig.url}`,
