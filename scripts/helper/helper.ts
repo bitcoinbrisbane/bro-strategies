@@ -235,6 +235,10 @@ export async function deployProxyContract(name: string, args: any[], libraries: 
   if (options != undefined) {
     contract = await upgrades.deployProxy(contractFactory, args, options)
   } else {
+
+    console.log("args 0", args[0])
+    console.log("args 1", args[1])
+
     contract = await upgrades.deployProxy(contractFactory, args)
   }
   logGrey(`Deploying proxy -> name: ${info} || address: ${contract.address} || arguments: ${JSON.stringify(args)}`)

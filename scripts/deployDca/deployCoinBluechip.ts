@@ -1,26 +1,49 @@
-import { Contract } from "ethers"
+import { Contract, ethers } from "ethers"
 import { readFileSync } from "fs"
 import { deployProxyContract, logBlue, retryUntilSuccess } from "../helper/helper"
-import { ethers } from "hardhat"
+
+type TokenInfo = {
+  token: string
+  decimals: ethers.BigNumber
+}
+
+type DCAStrategyInitArgs = {
+  depositFee: number
+  dcaInvestor: string
+  depositTokenInfo: TokenInfo
+  investmentPeriod: ethers.BigNumber
+  lastInvestmentTimestamp: ethers.BigNumber
+  minDepositAmount: ethers.BigNumber
+  positionLimit: ethers.BigNumber
+  router: string
+  depositToBluechipSwapPath: string[]
+  bluechipToDepositSwapPath: string[]
+}
 
 async function deployStrategy(strategyConfig: any): Promise<Contract> {
-  const tokenInfo = strategyConfig.dcaBaseArgs.depositTokenInfo
+  // const tokenInfo: TokenInfo = strategyConfig.dcaBaseArgs.depositTokenInfo
+  const tokenInfo: TokenInfo = { 
+    token: "0xD81965d1D44c084b43fBFE1Cc5baC7414cd4FbbD",
+    decimals: ethers.BigNumber.from("6")
+  }
+
   console.log("tokenInfo", tokenInfo)
 
-  const DCAStrategyInitArgs = {
+
+  const DCAStrategyInitArgs: DCAStrategyInitArgs = {
     depositFee: strategyConfig.dcaBaseArgs.depositFee,
     dcaInvestor: strategyConfig.dcaBaseArgs.dcaInvestor,
     depositTokenInfo: tokenInfo,
-    investmentPeriod: strategyConfig.dcaBaseArgs.investmentPeriod,
+    investmentPeriod: ethers.BigNumber.from(strategyConfig.dcaBaseArgs.investmentPeriod.toString()),
     lastInvestmentTimestamp: ethers.BigNumber.from(0),
-    minDepositAmount: strategyConfig.dcaBaseArgs.minDepositAmount,
-    positionLimits: ethers.BigNumber.from(0),
+    minDepositAmount: ethers.BigNumber.from(strategyConfig.dcaBaseArgs.minDepositAmount.toString()),
+    positionLimit: ethers.BigNumber.from(0),
     router: strategyConfig.dcaBaseArgs.router.router,
     depositToBluechipSwapPath: [ethers.constants.AddressZero],
     bluechipToDepositSwapPath: [ethers.constants.AddressZero],
   }
 
-  console.log("DCAStrategyInitArgs", DCAStrategyInitArgs)
+  // console.log("DCAStrategyInitArgs", DCAStrategyInitArgs)
 
   // return await deployProxyContract("CoinBluechip", [strategyConfig.dcaBaseArgs, ...strategyConfig.strategyArgs], {})
   return await deployProxyContract("CoinBluechip", [DCAStrategyInitArgs, tokenInfo], {})
